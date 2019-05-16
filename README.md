@@ -2,7 +2,7 @@
 
 ## Running the Application Locally
 
-The classes are self explanatory and it is necessary to install the PostgreSQL server to run it.
+The classes are self explanatory and it's necessary to install the PostgreSQL server to run it.
 
 Run `aqueduct serve` from this directory to run the application. For running within an IDE, run `bin/main.dart`. By default, a configuration file named `config.yaml` will be used.
 
