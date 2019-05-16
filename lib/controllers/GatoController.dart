@@ -17,16 +17,16 @@ class GatoController extends ResourceController {
     {'id': 12, 'name': 'Chloe', 'gender': 'female', 'age': '5 months', 'isAdotado': false, 'nomeDono': 'Josué', 'telefoneDono': '(51)1111'},  
   ];
 
-  final ManagedContext context;
+  // final ManagedContext context;
 
-  GatoController(this.context);
+  // GatoController(this.context);
 
   //mudar retorno
   @Operation.get()
   Future<Response> getAll() async {
     try {
-      final gatoQuery = Query<Gato>(context);
-      final gatos = await gatoQuery.fetch();
+      // final gatoQuery = Query<Gato>(context);
+      // final gatos = await gatoQuery.fetch();
       return Response.ok({"Gatos": _gatos});
     } catch (e) {
       return Response.badRequest(body: {"400 Response": e.toString()});
@@ -42,16 +42,16 @@ class GatoController extends ResourceController {
     return Response.ok(gato);
   }
 
-  //mudar retorno
-  @Operation.get("id")
-  Future<Response> getGatoByIDB(@Bind.path("id") int id) async {
-    final gatoQuery = Query<Gato>(context)
-      ..where((g) => g.id).equalTo(id);
-    final gato = await gatoQuery.fetchOne();
-    if (gato == null) {
-      return Response.notFound();
-    }
-    return Response.ok("gato");
-  }
+  // //mudar retorno
+  // @Operation.get("id")
+  // Future<Response> getGatoByIDB(@Bind.path("id") int id) async {
+  //   final gatoQuery = Query<Gato>(context)
+  //     ..where((g) => g.id).equalTo(id);
+  //   final gato = await gatoQuery.fetchOne();
+  //   if (gato == null) {
+  //     return Response.notFound();
+  //   }
+  //   return Response.ok("gato");
+  // }
 
 }

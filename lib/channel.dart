@@ -8,12 +8,12 @@ class RedesChannel extends ApplicationChannel {
   Future prepare() async {
     logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
 
-    final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
+    // final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
 
-    final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo("gatos_user", 
-    "password", "localhost", 5432, "gatos");
+    // final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo("gatos_user", 
+    // "password", "localhost", 5432, "gatos");
 
-    context = ManagedContext(dataModel, persistentStore);
+    // context = ManagedContext(dataModel, persistentStore);
 
   }
 
@@ -23,7 +23,9 @@ class RedesChannel extends ApplicationChannel {
 
     router
       .route("/gato/[:id]")
-      .link(()=>GatoController(context));
+      .link(()=>GatoController(
+        // context
+        ));
 
     return router;
   }
