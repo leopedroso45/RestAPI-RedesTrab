@@ -5,16 +5,32 @@ class GatoController extends ResourceController {
 
   GatoController(this.context);
 
-  //mudar retorno
   @Operation.get()
-  Future<Response> getAll() async {
-    try {
-      final gatoQuery = Query<Gato>(context);
-      final gatos = await gatoQuery.fetch();
-      return Response.ok(gatos);
-    } catch (e) {
+  Future<Response> getCats({@Bind.query('nomeDono')String nomeDono, @Bind.query('name')String name,@Bind.query('telefoneDono')String telefoneDono}) async {
+    try{
+    final gatoQuery = Query<Gato>(context);
+    if (nomeDono != null) {
+      gatoQuery.where((g) => g.nomeDono).contains(nomeDono, caseSensitive: false);
+    } else if (name != null){
+      gatoQuery.where((g) => g.name).contains(name, caseSensitive: false);
+    } else if (telefoneDono != null){
+      gatoQuery.where((g) => g.telefoneDono).contains(telefoneDono, caseSensitive: false);
+    }
+    final gatos = await gatoQuery.fetch();
+    return Response.ok(gatos);
+    }catch (e){
       return Response.badRequest(body: {"400 Response": e.toString()});
     }
+  }
+
+  @Operation.get("id")
+  Future<Response> getGatoByIDB(@Bind.path("id") int id) async {
+    final gatoQuery = Query<Gato>(context)..where((g) => g.id).equalTo(id);
+    final gato = await gatoQuery.fetchOne();
+    if (gato == null) {
+      return Response.notFound();
+    }
+    return Response.ok(gato);
   }
 
   @Operation.post()
@@ -34,14 +50,10 @@ class GatoController extends ResourceController {
     return Response.ok(insertedCat);
   }
 
-  //mudar retorno
-  @Operation.get("id")
-  Future<Response> getGatoByIDB(@Bind.path("id") int id) async {
-    final gatoQuery = Query<Gato>(context)..where((g) => g.id).equalTo(id);
-    final gato = await gatoQuery.fetchOne();
-    if (gato == null) {
-      return Response.notFound();
-    }
-    return Response.ok(gato);
+  @Operation.put()
+  Future<Response> updateIsAdotado() async {
+    
   }
+
+
 }

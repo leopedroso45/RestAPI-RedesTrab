@@ -10,8 +10,8 @@ class RedesChannel extends ApplicationChannel {
 
     final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
 
-    final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo("usuario", 
-    "1234", "localhost", 5432, "adoptpampa");
+    final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo("postgres", 
+    "123", "localhost", 5432, "adoptpampa");
 
     context = ManagedContext(dataModel, persistentStore);
 
@@ -22,11 +22,8 @@ class RedesChannel extends ApplicationChannel {
     final router = Router();
 
     router
-      .route("/gato/[:id]")
+      .route("/gato[/:id]")
       .link(()=>GatoController(context));
-
-
-
 
     return router;
   }
