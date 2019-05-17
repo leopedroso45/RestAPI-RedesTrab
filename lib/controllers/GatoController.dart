@@ -18,7 +18,7 @@ class GatoController extends ResourceController {
   }
 
   @Operation.post()
-  Future<Response> createHero() async {
+  Future<Response> createGato() async {
     final Map<String, dynamic> body = await request.body.decode();
     final query = Query<Gato>(context)
       ..values.name = body['name'] as String
@@ -29,9 +29,9 @@ class GatoController extends ResourceController {
       ..values.nomeDono = body['nomeDono'] as String
       ..values.telefoneDono = body['telefoneDono'] as String;
 
-    final insertedHero = await query.insert();
+    final insertedCat = await query.insert();
 
-    return Response.ok(insertedHero);
+    return Response.ok(insertedCat);
   }
 
   //mudar retorno
