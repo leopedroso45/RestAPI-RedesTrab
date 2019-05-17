@@ -23,7 +23,7 @@ class GatoController extends ResourceController {
     final gatoQuery = Query<Gato>(context)
     ..values.isAdotado = true
     ..where((g) => g.id).equalTo(id);
-    var updatedGato = await query.updateOne();
+    var updatedGato = await gatoQuery.updateOne();
     return Response.ok(updatedGato);
     }catch(e){
       return Response.badRequest(body: {"400 Response": e.toString()});
