@@ -5,6 +5,31 @@ class GatoController extends ResourceController {
 
   GatoController(this.context);
 
+  @Operation.delete("id")
+  Future<Response> deleteCat(@Bind.path("id") int id) async{
+    final gatoQuery = Query<Gato>(context)
+    ..where((g) => g.id).equalTo(id);
+    int gatosApagados = await gatoQuery.delete();
+    if(gatosApagados <= 0){
+      return Response.badRequest(body: {"400 Response": "Bad Request"});
+    } else {
+      Response.ok(gatosApagados);
+    }
+  }
+
+  @Operation.put("id")
+    Future<Response> updateIsAdotado(@Bind.path("id") int id) async{
+    try{
+    final gatoQuery = Query<Gato>(context)
+    ..values.isAdotado = true
+    ..where((g) => g.id).equalTo(id);
+    var updatedGato = await query.updateOne();
+    return Response.ok(updatedGato);
+    }catch(e){
+      return Response.badRequest(body: {"400 Response": e.toString()});
+    }
+  }
+
   @Operation.get()
   Future<Response> getCats({@Bind.query('nomeDono')String nomeDono, @Bind.query('name')String name,@Bind.query('telefoneDono')String telefoneDono}) async {
     try{
@@ -49,11 +74,5 @@ class GatoController extends ResourceController {
 
     return Response.ok(insertedCat);
   }
-
-  @Operation.put()
-  Future<Response> updateIsAdotado() async {
-    
-  }
-
 
 }
